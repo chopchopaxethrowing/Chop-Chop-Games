@@ -171,17 +171,17 @@ function initAroundWorld() {
         zone.style.background = colors[i];
 
         // Position zones in a circle - optimized for larger container
-        const radius = 320; // Increased for better spacing with larger container
+        const radius = 384; // Increased by 20% for larger container
         const angleRad = (angle + (360 / zones) / 2) * Math.PI / 180;
         const x = Math.cos(angleRad) * radius * 0.65;
         const y = Math.sin(angleRad) * radius * 0.65;
 
-        zone.style.width = '80px'; // Increased for better visibility
-        zone.style.height = '80px';
-        zone.style.left = `calc(50% + ${x}px - 40px)`;
-        zone.style.top = `calc(50% + ${y}px - 40px)`;
+        zone.style.width = '96px'; // Increased by 20% for better visibility
+        zone.style.height = '96px';
+        zone.style.left = `calc(50% + ${x}px - 48px)`;
+        zone.style.top = `calc(50% + ${y}px - 48px)`;
         zone.style.borderRadius = '50%';
-        zone.style.fontSize = '1.6rem'; // Increased font size
+        zone.style.fontSize = '1.9rem'; // Increased font size proportionally
         zone.textContent = i + 1;
 
         zone.addEventListener('click', (e) => {
@@ -1299,8 +1299,8 @@ function renderAxeCrushGrid() {
     gridContainer.style.display = 'grid';
     gridContainer.style.gridTemplateColumns = `repeat(${GameState.gameData.cols}, 1fr)`;
     gridContainer.style.gap = '5px';
-    // Responsive sizing: increased for better visibility
-    gridContainer.style.maxWidth = 'min(60vh, 85vw, 650px)';
+    // Responsive sizing: account for UI elements and ensure it fits in viewport
+    gridContainer.style.maxWidth = 'min(45vh, 80vw, 500px)';
     gridContainer.style.margin = '0 auto';
     
     for (let r = 0; r < GameState.gameData.rows; r++) {
@@ -1650,13 +1650,10 @@ function renderAxeMemoryGrid() {
     gridContainer.style.display = 'grid';
     gridContainer.style.gridTemplateColumns = `repeat(${GameState.gameData.cols}, 1fr)`;
     gridContainer.style.gap = '10px';
-    // Responsive sizing: significantly increased for better visibility and centered properly
-    gridContainer.style.maxWidth = 'min(90vh, 90vw, 1100px)';
-    gridContainer.style.margin = '0 auto';
-    gridContainer.style.position = 'absolute';
-    gridContainer.style.top = '50%';
-    gridContainer.style.left = '50%';
-    gridContainer.style.transform = 'translate(-50%, -50%)';
+    // Responsive sizing: fit within viewport with appropriate tile size
+    gridContainer.style.maxWidth = 'min(50vh, 85vw, 600px)';
+    gridContainer.style.margin = '20px auto';
+    gridContainer.style.padding = '10px';
     
     for (let r = 0; r < GameState.gameData.rows; r++) {
         for (let c = 0; c < GameState.gameData.cols; c++) {
@@ -1670,7 +1667,7 @@ function renderAxeMemoryGrid() {
             cell.style.display = 'flex';
             cell.style.alignItems = 'center';
             cell.style.justifyContent = 'center';
-            cell.style.fontSize = '2.5rem';
+            cell.style.fontSize = '3.5rem';
             cell.style.cursor = tile.state === 'collected' ? 'default' : 'pointer';
             cell.style.transition = 'all 0.3s';
             
@@ -2017,7 +2014,7 @@ function initEmojiFrenzy() {
         GameState.gameData.emojis.push({
             type: emojiType,
             x: Math.min(Math.max(x, 12), 82), // Tighter bounds to keep emojis inside
-            y: Math.min(Math.max(y, 15), 80)
+            y: Math.min(Math.max(y, 18), 75) // Adjusted bounds to prevent clipping at top/bottom
         });
     }
 
@@ -2115,7 +2112,7 @@ function handleEmojiClick(index) {
 
         do {
             x = Math.random() * 70 + 10; // Keep in safe bounds
-            y = Math.random() * 70 + 10;
+            y = Math.random() * 57 + 18; // Adjusted to match init bounds (18-75%)
 
             // Check for overlap with other emojis
             const tooClose = GameState.gameData.emojis.some((e, i) => {
@@ -2132,7 +2129,7 @@ function handleEmojiClick(index) {
         GameState.gameData.emojis[index] = {
             type: emojis[Math.floor(Math.random() * emojis.length)],
             x: Math.min(Math.max(x, 12), 82), // Tighter bounds to match init
-            y: Math.min(Math.max(y, 15), 80)
+            y: Math.min(Math.max(y, 18), 75) // Adjusted bounds to prevent clipping at top/bottom
         };
     }
 
@@ -3609,7 +3606,7 @@ function renderXmasTreeWithGifts() {
 
     const container = document.createElement('div');
     container.style.position = 'absolute';
-    container.style.top = '50%';
+    container.style.top = '53%';
     container.style.left = '50%';
     container.style.transform = 'translate(-50%, -50%)';
     container.style.width = '90%';
